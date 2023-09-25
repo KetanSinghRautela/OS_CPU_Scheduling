@@ -1,24 +1,28 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<sys/types.h>
-#include<sys/wait.h>
-int main()
-  {
- 	int fd[2],n,p;
-	char buffer[50];
- 	pipe(fd);
- 	p=fork();
- 	//parent process
- 	if(p>0)
- 	{
- 		printf("\nPassing Values to child id=%d\n",getpid());
- 		write(fd[1],"HELLO WORLD\n",10);  //file descriptor is the place where you want to send the data.
-  	}
- 	else
- 	{
- 		printf("\n Child received the data is=%d\n",getpid());
- 		n=read (fd[0],buffer,50);//reading from buffer with the size 50.
- 		write(1,buffer,n);   //printing to screen the amount of data from the buffer with size n.
-    }
-  		return 0;
- }
+#include <stdio.h>
+#include <math.h>
+int main() {
+   int n;
+	printf("Enter the number of processes: \n");
+	scanf("%d", &n);
+   int at[n], bt[n];
+	printf("Enter the arrival and burst time of processes: \n");
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &at[i]);
+		scanf("%d", &bt[i]);
+	}
+  int wt[n], tat[n];
+   tat[0] = bt[0];
+  int avgwt = 0, turnArndAvg = 0;
+	for (int i = 1; i < n; i++) {
+		tat[i] = bt[i] + tat[i - 1];
+		turnArndAvg += tat[i];
+	}
+	for (int i = 0; i < n; i++) {
+		wt[i] = tat[i] - (at[i] + bt[i]);
+		avgwt += wt[i];
+	}
+	printf("Average waiting time is %0.2f\n", (float)(avgwt) / n);
+	printf("Average Turn around time is %0.2f\n", (float)(turnArndAvg) / n);
+
+  return 0;	
+}
