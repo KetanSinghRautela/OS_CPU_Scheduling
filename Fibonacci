@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int main() 
+int main()  
 {
     int a = 0, b = 1;
     int c = a + b;
