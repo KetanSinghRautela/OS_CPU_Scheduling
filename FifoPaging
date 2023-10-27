@@ -1,0 +1,48 @@
+#include<stdio.h>
+int main(){
+	int i,j,k,no_frame,n,str[50],avail,frame[10];
+	int pagefault=0;
+	
+	printf("\nEnter the length of the Reference string : \n");
+	scanf("%d",&n);
+
+	printf("\nEnter the reference string : \n");
+        for(i=0;i<n;i++)
+        {
+            scanf("%d",&str[i]);
+        }
+
+        printf("\nEnter the number of Frames : ");
+        scanf("%d",&no_frame);
+        for(i=0;i<no_frame;i++)
+        {     
+         frame[i]= -1 ;
+        }
+
+          j=0;
+       
+        printf("\tRefrence String\t Page Frames\n");
+       	for(i=0;i<n;i++)
+        {  
+           printf("%d\t\t",str[i]);
+           avail=0;
+          
+          for(k=0;k<no_frame;k++)
+          {
+          	if(frame[k]==str[i])
+                avail=1;
+          }
+          
+          if (avail==0)
+          {
+                    frame[j]=str[i];
+                    j=(j+1)%no_frame;
+                    pagefault++;
+                    for(k=0;k<no_frame;k++)
+                    printf("%d\t",frame[k]);
+          }
+          printf("\n\n");
+        }
+                        printf("Page Fault Is %d\n",pagefault);
+                        return 0;
+}
